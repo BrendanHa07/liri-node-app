@@ -23,6 +23,7 @@ var client = new Twitter ({
 var fs = require("fs");
 
 var action = process.argv[2];
+var input = process.argv[3];
 
 // Put all actions into a switch statement
 
@@ -56,7 +57,7 @@ function showTweets() {
 				var date = tweets[i].created_at;
 
 				console.log("--------------------My Tweets----------------------");
-				console.log("@Brendanhahaha " + tweets[i].text + " created at " + date);
+				console.log("@Brendanhahaha: " + tweets[i].text + " created at " + date);
 				
 
 
@@ -100,6 +101,11 @@ function spotifyThis() {
 // showMovie function
 function showMovie(movie) {
 	var movie = process.argv[3]
+	if (input === undefined) {
+		movie = "Mr. Nobody";
+	} else {
+		movie = input;
+	};
 	var queryURL = "http://www.omdbapi.com/?t=" + movie + "&plot=short&tomatoes=true&R=json" + "&apikey=" + omdb;
 	request(queryURL, function (error, response, body) {
 		if (!error && response.statusCode === 200) {
@@ -128,9 +134,7 @@ function showMovie(movie) {
 			fs.appendFile("log.txt", "Plot: " + body.Plot);
 			fs.appendFile("log.txt", "Actors: " + body.Actors);
 			fs.appendFile("log.txt", "-------------Movie Info----------------")
-		} else if (movie.length === 0) {
-			console.log("You should check out Mr.Nobody");
-		}
+		} 
 		
 	});
 
@@ -140,9 +144,14 @@ function doSomething () {
 	fs.readFile("random.txt", "utf8", function(error, data) {
 		if (error) {
 			return console.log(error);
-		}
+		} else {
 		var text = data.split(",");
+		console.log(text[0]);
 		console.log(text[1]);
-		// spotifyThis(text[1]);
+		if (text[0] === 'spotify-this-song') {
+			spotifyThis(text[1]);
+		}
+		}
+	
 	});
 }
