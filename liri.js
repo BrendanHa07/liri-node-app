@@ -18,6 +18,8 @@ var client = new Twitter ({
 	access_token_secret:process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
+
+
 var fs = require("fs");
 
 var action = process.argv[2];
@@ -54,13 +56,13 @@ function showTweets() {
 				var date = tweets[i].created_at;
 
 				console.log("--------------------My Tweets----------------------");
-				console.log("@Brendanhahaha " + tweets[i].text + "created at " + date.substring(0, 19));
-				console.log("--------------------My Tweets----------------------");
+				console.log("@Brendanhahaha " + tweets[i].text + " created at " + date);
+				
 
 
 				// Add text to log file
 				fs.appendFile("log.txt", "-------------My Tweets----------------")
-				fs.appendFile("log.txt", "@Brendanhahaha: " + tweets[i].text + "created at " + data.substring(0, 19));
+				fs.appendFile("log.txt", "@Brendanhahaha: " + tweets[i].text + " created at " + date);
 				fs.appendFile("log.txt", "-------------My Tweets----------------")
 			}
 		}	
